@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Strategic Change Slicing Reference</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #52606d;
+      --line: #d8dee6;
+      --paper: #ffffff;
+      --soft: #f5f7fa;
+      --accent: #0b6b61;
+      --warn: #8a4b12;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--soft);
+      color: var(--ink);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+      background: var(--paper);
+      min-height: 100vh;
+    }
+    h1, h2 { line-height: 1.12; margin: 0 0 14px; }
+    h1 { font-size: 34px; }
+    h2 { font-size: 20px; margin-top: 34px; border-top: 1px solid var(--line); padding-top: 22px; }
+    p { margin: 0 0 14px; color: var(--muted); }
+    ul { margin: 0; padding-left: 22px; }
+    li { margin: 8px 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+    .box { border: 1px solid var(--line); border-radius: 8px; padding: 16px; background: #fff; }
+    .box strong { color: var(--accent); }
+    .formula {
+      margin: 20px 0;
+      padding: 16px;
+      border-left: 4px solid var(--accent);
+      background: #eef7f5;
+      color: var(--ink);
+      font-weight: 650;
+    }
+    .danger { border-left-color: var(--warn); background: #fff7ed; }
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      main { padding: 28px 18px 48px; }
+    }
+    @media print {
+      body { background: #fff; }
+      main { max-width: none; padding: 0; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Strategic Change Slicing</h1>
+    <p>A quick reference for turning ambiguous engineering work into small changes that still carry strategic intent.</p>
+
+    <div class="formula">A good slice is: one reason to change + one observable behavior or enabling constraint + one validation path + one rollback story.</div>
+
+    <h2>The Four Questions</h2>
+    <div class="grid">
+      <section class="box">
+        <strong>1. What outcome changes?</strong>
+        <p>Name the user, operator, developer, or system behavior that should be different.</p>
+      </section>
+      <section class="box">
+        <strong>2. What is the smallest useful move?</strong>
+        <p>Prefer a vertical slice when you need feedback. Prefer a horizontal slice when it unlocks several later slices.</p>
+      </section>
+      <section class="box">
+        <strong>3. How will we know it worked?</strong>
+        <p>Attach tests, metrics, logs, screenshots, review checks, or manual QA steps to the slice.</p>
+      </section>
+      <section class="box">
+        <strong>4. How do we back out?</strong>
+        <p>Keep configuration, data migrations, public contracts, and behavior changes separable when rollback risk is high.</p>
+      </section>
+    </div>
+
+    <h2>Slice Types</h2>
+    <ul>
+      <li><strong>Discovery slice:</strong> add logging, metrics, probes, or tests to reveal current behavior before changing it.</li>
+      <li><strong>Contract slice:</strong> introduce or clarify an interface, schema, route, event, or boundary.</li>
+      <li><strong>Vertical behavior slice:</strong> ship one user-visible path end to end.</li>
+      <li><strong>Refactoring slice:</strong> change structure without intended behavior change, backed by tests.</li>
+      <li><strong>Migration slice:</strong> move one caller, data segment, workflow, or traffic percentage to the new path.</li>
+      <li><strong>Cleanup slice:</strong> remove dead code, obsolete flags, duplicate paths, or transitional scaffolding after evidence says it is safe.</li>
+    </ul>
+
+    <h2>Red Flags</h2>
+    <div class="formula danger">A slice is too large when reviewers must understand several decisions at once, rollback would undo unrelated value, or validation depends on "trust me, I tested the whole thing manually."</div>
+    <ul>
+      <li>Feature work and broad refactoring are mixed together.</li>
+      <li>The PR description says "phase 1" but does not explain the destination.</li>
+      <li>Tests are deferred to a later change even though behavior changes now.</li>
+      <li>The change adds an unused abstraction with no proving usage.</li>
+      <li>The old and new systems coexist, but no one knows when the old path can be deleted.</li>
+    </ul>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://google.github.io/eng-practices/review/developer/small-cls.html">Google Engineering Practices: Small CLs</a></li>
+      <li><a href="https://google.github.io/eng-practices/review/developer/cl-descriptions.html">Google Engineering Practices: Writing good CL descriptions</a></li>
+      <li><a href="https://martinfowler.com/bliki/TechnicalDebt.html">Martin Fowler: Technical Debt</a></li>
+      <li><a href="https://martinfowler.com/bliki/StranglerFigApplication.html">Martin Fowler: Strangler Fig Application</a></li>
+    </ul>
+  </main>
+</body>
+</html>
