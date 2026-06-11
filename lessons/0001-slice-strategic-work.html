@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0001: Slice Strategic Work</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #151b23;
+      --muted: #53616f;
+      --paper: #fff;
+      --page: #f4f6f8;
+      --line: #d7dde5;
+      --accent: #0b6b61;
+      --accent-2: #355c9b;
+      --good: #146c43;
+      --bad: #9f2d20;
+      --soft-good: #edf8f1;
+      --soft-bad: #fff0ee;
+      --soft-accent: #eef7f5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main {
+      width: min(1040px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 70px;
+    }
+    header {
+      padding: 34px 0 24px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 750;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+    h1, h2, h3 { line-height: 1.12; margin: 0; letter-spacing: 0; }
+    h1 { font-size: clamp(34px, 5vw, 58px); max-width: 850px; }
+    h2 { font-size: 26px; margin-top: 42px; }
+    h3 { font-size: 18px; margin-bottom: 8px; }
+    p { color: var(--muted); margin: 12px 0 0; max-width: 780px; }
+    a { color: var(--accent-2); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+      gap: 22px;
+      margin-top: 24px;
+      align-items: start;
+    }
+    section, aside, .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+    section { margin-top: 18px; }
+    ul { margin: 12px 0 0; padding-left: 22px; }
+    li { margin: 8px 0; color: var(--muted); }
+    strong { color: var(--ink); }
+    .callout {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--soft-accent);
+      border: 1px solid #cbe7e2;
+      color: var(--ink);
+    }
+    .scenario {
+      font-size: 17px;
+      color: var(--ink);
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+    .choice-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    button.choice {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      text-align: left;
+      padding: 14px 16px;
+      border-radius: 8px;
+      font: inherit;
+      cursor: pointer;
+    }
+    button.choice:hover, button.choice:focus {
+      outline: 2px solid #bedbd7;
+      border-color: var(--accent);
+    }
+    button.choice[aria-pressed="true"] {
+      border-color: var(--accent);
+      background: var(--soft-accent);
+    }
+    .feedback {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      min-height: 74px;
+    }
+    .feedback.good {
+      color: var(--good);
+      background: var(--soft-good);
+      border-color: #b8dec7;
+    }
+    .feedback.bad {
+      color: var(--bad);
+      background: var(--soft-bad);
+      border-color: #f0beb8;
+    }
+    .score {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      font-weight: 700;
+    }
+    .practice textarea {
+      width: 100%;
+      min-height: 132px;
+      resize: vertical;
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font: 15px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .practice button {
+      margin-top: 12px;
+      border: 0;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    .checklist {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+    }
+    .check {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+    .check.pass {
+      color: var(--good);
+      background: var(--soft-good);
+      border-color: #b8dec7;
+    }
+    .mini {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      main { width: min(100% - 24px, 720px); }
+      h1 { font-size: 36px; }
+    }
+    @media print {
+      body { background: #fff; }
+      main { width: 100%; padding: 0; }
+      section, aside, .panel { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Lesson 0001</div>
+      <h1>Strategic programmers slice work before they code.</h1>
+      <p>This lesson teaches one skill: taking an ambiguous, senior-shaped task and turning it into a small sequence of changes that can be reviewed, validated, and rolled back.</p>
+    </header>
+
+    <div class="layout">
+      <div>
+        <section>
+          <h2>Why This Matters</h2>
+          <p>AI can produce code quickly. That makes the bottleneck move upstream: deciding what should change, how much to change at once, how to validate it, and how to avoid trapping the team inside a risky half-migration.</p>
+          <p>Google's engineering practices argue for small, self-contained changes because they are easier to review, reason about, test, merge, and roll back. Fowler's writing on technical debt adds the strategic filter: cleanup is worth doing when it reduces the cost of future changes in code you will keep touching.</p>
+          <div class="callout"><strong>The core move:</strong> do not ask "Can I implement this?" Ask "What is the smallest change that creates evidence, preserves options, and improves the next change?"</div>
+        </section>
+
+        <section>
+          <h2>The Slice Test</h2>
+          <p>Before coding, a strategic slice should answer four questions.</p>
+          <ul>
+            <li><strong>Outcome:</strong> who or what benefits if this lands?</li>
+            <li><strong>Boundary:</strong> what is included, and what is deliberately excluded?</li>
+            <li><strong>Validation:</strong> what test, metric, QA step, or review evidence proves it worked?</li>
+            <li><strong>Reversibility:</strong> how expensive is rollback if this is wrong?</li>
+          </ul>
+          <p>Read the companion reference when you want the compressed version: <a href="../reference/0001-strategic-change-slicing.html">Strategic Change Slicing Reference</a>.</p>
+        </section>
+
+        <section>
+          <h2>Interactive Drill</h2>
+          <p>Pick the most strategic first slice for each scenario. You get immediate feedback.</p>
+          <div id="quiz"></div>
+          <div class="score"><span id="scoreLabel">Score: 0 / 3</span><span class="mini">A good answer optimizes for evidence and optionality.</span></div>
+        </section>
+
+        <section class="practice">
+          <h2>Practice On Your Own Work</h2>
+          <p>Write a slice plan for a real or imagined task. The checker is simple, but it forces the important fields into the plan.</p>
+          <textarea id="plan" spellcheck="true">Outcome:
+First slice:
+Validation:
+Rollback:
+Later slices:</textarea>
+          <button id="checkPlan" type="button">Check plan</button>
+          <div class="checklist" id="planFeedback"></div>
+          <p class="mini">Bring your plan back to the agent and ask for a critique. The agent can help sharpen the slice sequence and spot hidden coupling.</p>
+        </section>
+      </div>
+
+      <aside>
+        <h2>Senior Signal</h2>
+        <p>A junior often treats "small" as "less code." A strategic programmer treats "small" as "one coherent decision with a clear validation path."</p>
+        <div class="callout"><strong>Rule of thumb:</strong> if the reviewer must evaluate a product decision, an architecture decision, a data migration, and a refactor in the same PR, you probably skipped the slicing step.</div>
+        <h2>Sources</h2>
+        <ul>
+          <li><a href="https://google.github.io/eng-practices/review/developer/small-cls.html">Google: Small CLs</a></li>
+          <li><a href="https://google.github.io/eng-practices/review/developer/cl-descriptions.html">Google: Good CL descriptions</a></li>
+          <li><a href="https://google.github.io/eng-practices/review/reviewer/standard.html">Google: Code review standard</a></li>
+          <li><a href="https://martinfowler.com/bliki/TechnicalDebt.html">Fowler: Technical Debt</a></li>
+          <li><a href="https://martinfowler.com/bliki/StranglerFigApplication.html">Fowler: Strangler Fig Application</a></li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      {
+        scenario: "The team wants to replace a brittle billing calculation module. It has weak tests and several unknown edge cases in production.",
+        choices: [
+          {
+            text: "Add characterization tests and production-safe logging around current billing outcomes before changing behavior.",
+            correct: true,
+            feedback: "Correct. This creates evidence about current behavior and reduces rewrite risk before the team asks AI or humans to generate replacement code."
+          },
+          {
+            text: "Ask AI to rewrite the module in a cleaner style and open one PR with the new implementation.",
+            correct: false,
+            feedback: "Too much hidden risk. A cleaner rewrite without behavior evidence may erase important edge cases."
+          },
+          {
+            text: "Rename files and classes first so the module feels easier to navigate.",
+            correct: false,
+            feedback: "Renaming can be useful, but it does not answer whether the team understands billing behavior."
+          }
+        ]
+      },
+      {
+        scenario: "A product feature needs API, service, database, and UI changes. Reviewers are already overloaded.",
+        choices: [
+          {
+            text: "Ship the database migration, service logic, API route, and UI in one PR so the feature is complete.",
+            correct: false,
+            feedback: "Completion is attractive, but this creates a large review surface and a broad rollback problem."
+          },
+          {
+            text: "Define the smallest contract first, then land one vertical behavior behind a feature flag with tests.",
+            correct: true,
+            feedback: "Correct. The contract creates alignment, and the flagged vertical slice gives an end-to-end proof without forcing the full feature at once."
+          },
+          {
+            text: "Build the UI first with mocked data and defer service and API decisions.",
+            correct: false,
+            feedback: "This can help discovery, but it risks postponing the hard integration questions if the system contract is unknown."
+          }
+        ]
+      },
+      {
+        scenario: "You find ugly code in a stable area while adding a feature somewhere else.",
+        choices: [
+          {
+            text: "Refactor the ugly area now because senior engineers improve code quality wherever they see problems.",
+            correct: false,
+            feedback: "This confuses quality with priority. Fowler's debt framing says interest is paid when you need to change that area."
+          },
+          {
+            text: "Ignore all code quality issues because only product delivery matters.",
+            correct: false,
+            feedback: "Too crude. Code health affects delivery, but the cleanup should be tied to future change cost."
+          },
+          {
+            text: "Leave the stable ugly area alone unless upcoming work will pay interest on it; focus cleanup near the change path.",
+            correct: true,
+            feedback: "Correct. Strategic cleanup follows change pressure, not aesthetic discomfort."
+          }
+        ]
+      }
+    ];
+
+    const quiz = document.getElementById("quiz");
+    const scoreLabel = document.getElementById("scoreLabel");
+    const answered = new Map();
+
+    function renderQuiz() {
+      questions.forEach((question, index) => {
+        const panel = document.createElement("div");
+        panel.className = "panel";
+        panel.style.marginTop = index === 0 ? "16px" : "14px";
+
+        const title = document.createElement("h3");
+        title.textContent = `Scenario ${index + 1}`;
+        panel.appendChild(title);
+
+        const scenario = document.createElement("div");
+        scenario.className = "scenario";
+        scenario.textContent = question.scenario;
+        panel.appendChild(scenario);
+
+        const choices = document.createElement("div");
+        choices.className = "choice-grid";
+
+        const feedback = document.createElement("div");
+        feedback.className = "feedback";
+        feedback.textContent = "Choose an answer to see feedback.";
+
+        question.choices.forEach((choice) => {
+          const button = document.createElement("button");
+          button.className = "choice";
+          button.type = "button";
+          button.textContent = choice.text;
+          button.setAttribute("aria-pressed", "false");
+          button.addEventListener("click", () => {
+            [...choices.querySelectorAll("button")].forEach((item) => item.setAttribute("aria-pressed", "false"));
+            button.setAttribute("aria-pressed", "true");
+            answered.set(index, choice.correct);
+            feedback.className = `feedback ${choice.correct ? "good" : "bad"}`;
+            feedback.textContent = choice.feedback;
+            updateScore();
+          });
+          choices.appendChild(button);
+        });
+
+        panel.appendChild(choices);
+        panel.appendChild(feedback);
+        quiz.appendChild(panel);
+      });
+    }
+
+    function updateScore() {
+      const score = [...answered.values()].filter(Boolean).length;
+      scoreLabel.textContent = `Score: ${score} / ${questions.length}`;
+    }
+
+    const plan = document.getElementById("plan");
+    const checkPlan = document.getElementById("checkPlan");
+    const planFeedback = document.getElementById("planFeedback");
+
+    function checkPlanText() {
+      const text = plan.value.toLowerCase();
+      const checks = [
+        ["Names an outcome", /outcome:\s*\S/.test(text)],
+        ["Names a first slice", /first slice:\s*\S/.test(text)],
+        ["Includes validation evidence", /validation:\s*\S/.test(text)],
+        ["Includes rollback or reversibility", /rollback:\s*\S/.test(text)],
+        ["Separates later slices from the first slice", /later slices:\s*\S/.test(text)]
+      ];
+      planFeedback.innerHTML = "";
+      checks.forEach(([label, pass]) => {
+        const row = document.createElement("div");
+        row.className = `check ${pass ? "pass" : ""}`;
+        row.textContent = `${pass ? "Pass" : "Missing"}: ${label}`;
+        planFeedback.appendChild(row);
+      });
+    }
+
+    renderQuiz();
+    checkPlan.addEventListener("click", checkPlanText);
+  </script>
+</body>
+</html>
